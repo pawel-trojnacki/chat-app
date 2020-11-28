@@ -1,6 +1,11 @@
 import { Schema, Document, model, Types } from 'mongoose';
 import mongooseUniqueValidator from 'mongoose-unique-validator';
 
+export enum ChannelRoles {
+    Admin = 'admin',
+    User = 'user',
+}
+
 export interface UserModel extends Document {
     username: string;
     email: string;

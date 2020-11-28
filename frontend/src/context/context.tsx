@@ -7,14 +7,16 @@ import React, {
 } from 'react';
 
 export interface AuthStateType {
-  isAuthenticated: boolean;
-  token: null | string;
-  user: null | string;
+  isAuthenticated?: boolean;
+  user?: null | string;
+  token?: null | string;
+  userData?: any;
 }
 
 export enum AuthActionTypes {
   Login = 'LOGIN',
   Logout = 'LOGOUT',
+  SetUserData = 'SET_USER_DATA',
 }
 
 export interface AuthActions {
@@ -26,8 +28,9 @@ const initialState: AuthStateType = {
   isAuthenticated: !!(
     localStorage.getItem('user') && localStorage.getItem('token')
   ),
-  user: localStorage.getItem('user') || null,
-  token: localStorage.getItem('token') || null,
+  user: JSON.parse(localStorage.getItem('user') as string) || null,
+  token: JSON.parse(localStorage.getItem('token') as string) || null,
+  userData: null,
 };
 
 export const AuthContext = createContext<{
@@ -47,7 +50,7 @@ const AuthReducer = (state: AuthStateType, action: AuthActions) => {
         ...state,
         isAuthenticated: true,
         user: action.payload!.user,
-        token: action.payload!.user,
+        token: action.payload!.token,
       };
     case AuthActionTypes.Logout:
       localStorage.clear();
@@ -56,6 +59,11 @@ const AuthReducer = (state: AuthStateType, action: AuthActions) => {
         isAuthenticated: false,
         user: null,
         token: null,
+      };
+    case AuthActionTypes.SetUserData:
+      return {
+        ...state,
+        userData: action.payload!.userData,
       };
     default:
       return state;

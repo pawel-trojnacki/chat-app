@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import expressFileupload from 'express-fileupload';
 import path from 'path';
-
 import userRouter from './routes/user';
 import channelRouter from './routes/channel';
 
@@ -33,7 +32,12 @@ app.use(channelRouter);
 mongoose
     .connect(DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-        app.listen(PORT, () => {
+        const server = app.listen(PORT, () => {
             console.log(`[server] 🔥 Your server is running at PORT ${PORT}`);
         });
-    });
+        const io = require('./socket').init(server);
+        io.on('connection', (socket) =>
+            console.log(`[socket] 🚀 Client conntected`)
+        );
+    })
+    .catch((err) => console.log(err));

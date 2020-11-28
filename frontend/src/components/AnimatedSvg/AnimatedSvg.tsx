@@ -16,7 +16,7 @@ const svgVariants = {
 };
 
 const transition = {
-  duration: 0.5,
+  duration: 1,
   ease: 'easeInOut',
 };
 
@@ -325,7 +325,7 @@ const AnimatedSvg = () => {
           variants={svgVariants}
           initial="hidden"
           animate="visible"
-          transition={{ ...transition, delay: 0.3 }}
+          transition={{ ...transition, delay: 0.6 }}
           id="window"
         >
           <g id="Window_1_">
@@ -942,7 +942,7 @@ const AnimatedSvg = () => {
           id="characters"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1, ease: 'easeInOut' }}
+          transition={{ duration: 0.6, delay: 1.6, ease: 'easeInOut' }}
         >
           <g>
             <g id="Character_4_">
@@ -1831,7 +1831,7 @@ const AnimatedSvg = () => {
           id="speech-bubbles"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ...transition, delay: 1.25 }}
+          transition={{ ...transition, delay: 2.3 }}
         >
           <g id="Speech_Bubble_8_">
             <g>

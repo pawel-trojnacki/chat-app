@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
-import Channel, { ChannelModel } from '../models/channel';
-import User, { UserModel } from '../models/user';
+import Channel, { ChannelModel, Category } from '../models/channel';
+import User, { UserModel, ChannelRoles } from '../models/user';
 
-export const getChannels: RequestHandler = async (req, res, next) => {
+export const getChannels: RequestHandler = async (req, res) => {
     let channels: ChannelModel[] | null;
 
     try {
@@ -18,6 +18,39 @@ export const getChannels: RequestHandler = async (req, res, next) => {
     if (!channels || channels.length < 1) {
         return res.status(404).json({ error: 'There are no channels' });
     }
+
+    channels = channels.filter((channel) => {
+        const isMember = channel.members.includes((req as any).user.toString());
+        return !isMember;
+    });
+
+    res.json({
+        channels: channels.map((channel) =>
+            channel.toObject({ getters: true })
+        ),
+    });
+};
+
+export const getCategoryChannels: RequestHandler = async (req, res) => {
+    const category: Category = req.params.category as Category;
+    let channels: ChannelModel[] | null;
+
+    try {
+        channels = await Channel.find({ category: category }, '-messages');
+    } catch {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    if (!channels || channels.length < 1) {
+        return res.status(404).json({ error: 'There are no channels' });
+    }
+
+    channels = channels.filter((channel) => {
+        const isMember = channel.members.includes((req as any).user.toString());
+        return !isMember;
+    });
 
     res.json({
         channels: channels.map((channel) =>
@@ -107,7 +140,7 @@ export const createChannel: RequestHandler = async (req, res) => {
         const sess = await mongoose.startSession();
         sess.startTransaction();
         await channel.save({ session: sess });
-        user.channels.push({ channel: channel._id, role: 'admin' });
+        user.channels.push({ channel: channel._id, role: ChannelRoles.Admin });
         await user.save({ session: sess });
         sess.commitTransaction();
     } catch {
@@ -124,12 +157,14 @@ export const joinChannel: RequestHandler = async (req, res) => {
     const userId = (req as any).user;
 
     let channel: ChannelModel | null;
+    let user: UserModel | null;
+
     try {
         channel = await Channel.findById(channelId);
     } catch {
         return res
             .status(500)
-            .json({ error: 'Something went wrong. Please try again' });
+            .json({ error: 'Something went wrong. Please try again 1' });
     }
 
     if (!channel) {
@@ -146,15 +181,37 @@ export const joinChannel: RequestHandler = async (req, res) => {
             .json({ error: 'You are already in this channel' });
     }
 
-    channel.members.push(userId);
-
     try {
-        await channel.save();
+        user = await User.findById(userId);
     } catch {
         return res
             .status(500)
             .json({ error: 'Something went wrong. Please try again' });
     }
+
+    if (!user) {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        channel.members.push(userId);
+        await channel.save({ session: sess });
+        user.channels.push({ channel: channel._id, role: ChannelRoles.User });
+        await user.save({ session: sess });
+        sess.commitTransaction();
+    } catch {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    require('../socket')
+        .getIo()
+        .emit('channel-info', { action: 'join-channel', channel: channel });
 
     return res.json({ message: 'Joined' });
 };

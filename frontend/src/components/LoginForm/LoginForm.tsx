@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { Box, Button, CircularProgress } from '@material-ui/core';
@@ -7,6 +8,7 @@ import { object, string } from 'yup';
 
 import { useAxios } from '../../hooks/useAxios';
 import { AuthContext, AuthActionTypes } from '../../context/context';
+import { Urls } from '../../constants/urls';
 
 export interface loginValuesModel {
   email: string;
@@ -15,7 +17,8 @@ export interface loginValuesModel {
 
 const LoginForm = () => {
   const [error, isLoading, sendRequest] = useAxios();
-  const { state, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const initialValues = {
     email: '',
@@ -42,11 +45,9 @@ const LoginForm = () => {
             token: response.token,
           },
         });
+        history.push(Urls.Explore);
       }
     }
-
-    console.log(response);
-    console.log(state);
   };
 
   return (

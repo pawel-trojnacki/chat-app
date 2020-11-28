@@ -33,7 +33,8 @@ let theme = createMuiTheme({
     },
     h2: {
       fontSize: '1.5rem',
-      fontWeight: 600,
+      fontWeight: 400,
+      textTransform: 'none',
     },
     h3: {
       fontSize: '1.3rem',
@@ -41,12 +42,12 @@ let theme = createMuiTheme({
       textTransform: 'uppercase',
     },
     h4: {
-      fontSize: '1.3rem',
+      fontSize: '1.2rem',
       fontWeight: 600,
-      textTransform: 'lowercase',
+      textTransform: 'none',
     },
     h5: {
-      fontSize: '1.1rem',
+      fontSize: '1rem',
       fontWeight: 600,
     },
   },

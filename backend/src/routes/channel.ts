@@ -5,6 +5,7 @@ import { check } from 'express-validator';
 import {
     createChannel,
     getChannels,
+    getCategoryChannels,
     getSingleChannel,
     joinChannel,
     editChannel,
@@ -25,6 +26,8 @@ channelRouter.post(
 );
 
 channelRouter.get('/api/channels', getChannels);
+
+channelRouter.get('/api/channels/:category', getCategoryChannels);
 
 channelRouter.patch('/api/join-channel/:channelId', joinChannel);
 

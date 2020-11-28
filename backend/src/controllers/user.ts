@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import User, { UserModel } from '../models/user';
+// import { getIo } from '../socket';
 
 export const signup: RequestHandler = async (req, res) => {
     const errors = validationResult(req);
@@ -93,7 +94,7 @@ export const signup: RequestHandler = async (req, res) => {
             { user: user.id },
             `${process.env.AUTH_TOKEN_SECRET}`,
             {
-                expiresIn: '1h',
+                expiresIn: '10h',
             }
         );
     } catch {
@@ -178,6 +179,8 @@ export const getUser: RequestHandler = async (req, res) => {
     if (!user) {
         return res.status(404).json({ error: 'Could not find user id' });
     }
+
+    // getIo().emit('user-info', { action: 'userAction', user: user });
 
     res.status(200).json({ user: user.toObject({ getters: true }) });
 };
