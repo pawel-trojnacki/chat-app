@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { signup, login, getUser } from '../controllers/user';
+import { signup, login, getUser, editUsername } from '../controllers/user';
 import { auth } from '../middlewares/auth';
 
 const userRouter = Router();
@@ -9,7 +9,7 @@ const userRouter = Router();
 userRouter.post(
     '/api/user/signup',
     [
-        check('username').isLength({ min: 3 }),
+        check('username').isLength({ min: 3, max: 20 }),
         check('email').normalizeEmail().isEmail(),
         check('password').isLength({ min: 6 }),
     ],
@@ -21,5 +21,11 @@ userRouter.post('/api/user/login', login);
 userRouter.use(auth);
 
 userRouter.get('/api/user/', getUser);
+
+userRouter.patch(
+    '/api/edit-username',
+    [check('username').isLength({ min: 3, max: 20 })],
+    editUsername
+);
 
 export default userRouter;

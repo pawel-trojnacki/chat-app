@@ -15,7 +15,7 @@ const App = () => {
           <main>
             <Switch>
               <Route path="/" exact component={Auth} />
-              <Route path="/dashboard/:path?" exact>
+              <Route path="/dashboard/:path?/:path?" exact>
                 <UserTemplate>
                   <Switch>
                     {routes.map(({ path, component, isPrivate }) => (

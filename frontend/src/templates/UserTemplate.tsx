@@ -60,6 +60,9 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
         case Urls.UserAccount:
           setPageTitle('Account');
           break;
+        // case Urls.Explore + '/5fbc1867dc33cf0321cbcc6a':
+        //   setPageTitle('Channel');
+        //   break;
         default:
           setPageTitle('Dashboard');
           break;
@@ -94,8 +97,9 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
             if (data.action === 'join-channel') {
               setUserChannels((prevChannels: []) => [
                 ...prevChannels,
-                { id: data.channel._id, channel: { name: data.channel.name } },
+                { channel: { name: data.channel.name, id: data.channel._id } },
               ]);
+              console.log(data);
             }
           });
         });

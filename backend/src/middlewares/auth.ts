@@ -10,9 +10,7 @@ export const auth: RequestHandler = (req, res, next) => {
         if (req.headers && req.headers.authorization) {
             const token = req.headers.authorization?.split(' ')[1];
             if (!token) {
-                return res
-                    .status(401)
-                    .json({ error: 'Authentication failed 1' });
+                return res.status(401).json({ error: 'Authentication failed' });
             }
 
             const decoded = jwt.verify(
@@ -25,9 +23,9 @@ export const auth: RequestHandler = (req, res, next) => {
 
             next();
         } else {
-            return res.status(500).json({ error: 'Authentication failed 2' });
+            return res.status(500).json({ error: 'Authentication failed' });
         }
     } catch {
-        return res.status(401).json({ error: 'Authentication failed 3' });
+        return res.status(401).json({ error: 'Authentication failed' });
     }
 };

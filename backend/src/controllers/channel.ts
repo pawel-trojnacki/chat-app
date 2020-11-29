@@ -65,7 +65,10 @@ export const getSingleChannel: RequestHandler = async (req, res) => {
 
     let channel: ChannelModel | null;
     try {
-        channel = await Channel.findById(channelId);
+        channel = await Channel.findById(channelId).populate({
+            path: 'messages.creator',
+            select: 'username',
+        });
     } catch {
         return res
             .status(500)
@@ -266,4 +269,69 @@ export const editChannel: RequestHandler = async (req, res) => {
     }
 
     res.json({ message: 'Channel has been edited' });
+};
+
+// *********************
+// Sending message
+// *********************
+
+// content: string;
+// createdAt: Date;
+// creator: string;
+// new Date(Date.now()),
+
+export const sendMessage: RequestHandler = async (req, res) => {
+    const channelId = req.params.channelId;
+    const userId = (req as any).user;
+    const content = req.body.content;
+
+    let channel: ChannelModel | null;
+
+    try {
+        channel = await Channel.findById(channelId);
+    } catch {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    if (!channel) {
+        return res.status(404).json({ error: `Channel doesn't exist` });
+    }
+
+    channel.messages.push({
+        content,
+        createdAt: new Date(Date.now()),
+        creator: userId,
+    });
+
+    try {
+        await channel.save();
+    } catch {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    let messages;
+
+    try {
+        messages = await Channel.findById(channelId).populate({
+            path: 'messages.creator',
+            select: 'username',
+        });
+    } catch {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again' });
+    }
+
+    require('../socket')
+        .getIo()
+        .emit('channel', {
+            action: 'get-channel',
+            messages: messages.messages,
+        });
+
+    res.json({ messages: messages.messages.toObject({ getters: true }) });
 };

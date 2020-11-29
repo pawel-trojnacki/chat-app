@@ -9,6 +9,7 @@ import {
     getSingleChannel,
     joinChannel,
     editChannel,
+    sendMessage,
 } from '../controllers/channel';
 
 const channelRouter = Router();
@@ -34,5 +35,7 @@ channelRouter.patch('/api/join-channel/:channelId', joinChannel);
 channelRouter.get('/api/channel/:channelId', getSingleChannel);
 
 channelRouter.patch('/api/edit-channel/:channelId', editChannel);
+
+channelRouter.patch('/api/send-message/:channelId', sendMessage);
 
 export default channelRouter;

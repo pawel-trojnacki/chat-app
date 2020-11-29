@@ -74,10 +74,10 @@ const Drawer: FC<{
 
       {userChannels && userChannels.length > 0 && (
         <List>
-          {userChannels.map(({ id, channel }: { id: string; channel: any }) => (
+          {userChannels.map(({ channel }: { channel: any }) => (
             <Link
-              key={id}
-              to={`/dashboard/channels/${id}`}
+              key={channel.id}
+              to={`/dashboard/channels/${channel.id}`}
               className={classes.linkElement}
             >
               <ListItem button>
