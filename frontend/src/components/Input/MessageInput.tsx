@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   root: {
     position: 'absolute',
     width: '98%',
-    // bottom: '0',
+    bottom: '0',
     paddingBottom: '20px',
   },
 });

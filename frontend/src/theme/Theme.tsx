@@ -8,14 +8,11 @@ import {
 let theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#5dbdb0',
-      main: '#048182',
-      dark: '#066360',
+      main: '#058573',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#455a64',
-      dark: '#37474f',
+      main: '#5e6c74',
       contrastText: '#fff',
     },
     grey: {
@@ -49,6 +46,9 @@ let theme = createMuiTheme({
     h5: {
       fontSize: '1rem',
       fontWeight: 600,
+    },
+    body2: {
+      fontSize: '0.7rem',
     },
   },
 });

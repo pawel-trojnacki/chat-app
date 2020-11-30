@@ -1,31 +1,22 @@
 import React, { useEffect, useState, FC, useContext, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import openSocket from 'socket.io-client';
-import { Box } from '@material-ui/core';
+import { Box, List } from '@material-ui/core';
 
 import { useAxios } from '../hooks/useAxios';
 import { AuthContext } from '../context/context';
 import MessageInput from '../components/Input/MessageInput';
 import Loader from '../components/Lodader/Loader';
+import Message, { MessageProps } from '../components/Message/Message';
 
 interface ParamType {
   id: string;
 }
 
-interface MessageType {
-  id: string;
-  createdAt: Date;
-  content: string;
-  creator: {
-    id: string;
-    username: string;
-  };
-}
-
 const ChannelPage: FC = () => {
   const { state } = useContext(AuthContext);
   const [channel, setChannel] = useState<object | null>(null);
-  const [messages, setMessages] = useState<[MessageType] | null>(null);
+  const [messages, setMessages] = useState<[MessageProps] | null>(null);
   const { id } = useParams<ParamType>();
   const [error, isLoading, sendRequest] = useAxios();
   const messagesEnd = useRef(null);
@@ -61,21 +52,30 @@ const ChannelPage: FC = () => {
     scrollToBottom();
   }, [messages]);
   return (
-    <div style={{ position: 'relative', minHeight: '80vh' }}>
-      {(isLoading || error) && <Loader isLoading={isLoading} error={error} />}
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      }}
+    >
+      {/* {(isLoading || error) && <Loader isLoading={isLoading} error={error} />} */}
       {messages && (
         <>
-          <Box paddingBottom="60px">
-            <h1>Channel</h1>
-            <ul>
+          <Box paddingBottom="100px">
+            <List>
               {messages.map((message) => (
-                <li key={message.id}>
-                  <h5>{message.creator.username}</h5>
-                  <h6>{message.createdAt}</h6>
-                  <p>{message.content}</p>
-                </li>
+                <Message
+                  key={message.id}
+                  id={message.id}
+                  createdAt={new Date(message.createdAt)}
+                  creator={message.creator}
+                  content={message.content}
+                />
               ))}
-            </ul>
+            </List>
           </Box>
           <MessageInput id={id} />
         </>

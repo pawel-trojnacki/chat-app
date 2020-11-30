@@ -67,7 +67,7 @@ export const getSingleChannel: RequestHandler = async (req, res) => {
     try {
         channel = await Channel.findById(channelId).populate({
             path: 'messages.creator',
-            select: 'username',
+            select: 'username avatar',
         });
     } catch {
         return res
@@ -318,7 +318,7 @@ export const sendMessage: RequestHandler = async (req, res) => {
     try {
         messages = await Channel.findById(channelId).populate({
             path: 'messages.creator',
-            select: 'username',
+            select: 'username avatar',
         });
     } catch {
         return res
@@ -326,12 +326,10 @@ export const sendMessage: RequestHandler = async (req, res) => {
             .json({ error: 'Something went wrong. Please try again' });
     }
 
-    require('../socket')
-        .getIo()
-        .emit('channel', {
-            action: 'get-channel',
-            messages: messages.messages,
-        });
+    require('../socket').getIo().emit('channel', {
+        action: 'get-channel',
+        messages: messages.messages,
+    });
 
     res.json({ messages: messages.messages.toObject({ getters: true }) });
 };

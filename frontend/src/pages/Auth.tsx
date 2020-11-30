@@ -14,7 +14,7 @@ const Auth = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   if (state.isAuthenticated) {
-    return <Redirect to={Urls.UserAccount} />;
+    return <Redirect to={Urls.Explore} />;
   }
 
   return (

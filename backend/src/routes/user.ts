@@ -1,7 +1,13 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import { signup, login, getUser, editUsername } from '../controllers/user';
+import {
+    signup,
+    login,
+    getUser,
+    editUsername,
+    uploadAvatar,
+} from '../controllers/user';
 import { auth } from '../middlewares/auth';
 
 const userRouter = Router();
@@ -27,5 +33,7 @@ userRouter.patch(
     [check('username').isLength({ min: 3, max: 20 })],
     editUsername
 );
+
+userRouter.patch('/api/upload-avatar', uploadAvatar);
 
 export default userRouter;
