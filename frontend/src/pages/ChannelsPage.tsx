@@ -1,19 +1,24 @@
-import React, { FC, useEffect, useContext, useState } from 'react';
-import { GridList } from '@material-ui/core';
+import React, { FC, useEffect, useContext, useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Grid, Box } from '@material-ui/core';
 import { AuthContext } from '../context/context';
 import { useAxios } from '../hooks/useAxios';
 import Loader from '../components/Lodader/Loader';
 import ChannelCard from '../components/ChannelCard/ChannelCard';
 import CategoryTabs from '../components/CategoryTabs/CategoryTabs';
 import { ChannelModel } from '../constants/channelModel';
+import { compareChannels } from '../utils/compare';
 
 const ChannelsPage: FC = () => {
+  const history = useHistory();
   const [channels, setChannels] = useState<ChannelModel[]>([]);
   const { state } = useContext(AuthContext);
   const [error, isLoading, sendRequest] = useAxios();
 
-  const handleJoinButtonClick: (id: string) => void = (id) => {
-    sendRequest(
+  const sortedChannels = channels.sort(compareChannels);
+
+  const joinChannel: (id: string) => void = async (id) => {
+    await sendRequest(
       `${process.env.REACT_APP_API_URL}/api/join-channel/${id}`,
       'patch',
       {},
@@ -21,69 +26,61 @@ const ChannelsPage: FC = () => {
         authorization: 'Bearer ' + state.token,
       }
     );
+    history.push(`/dashboard/channels/${id}`);
   };
 
-  const handleClick: (req: string | null) => void = (req) => {
-    setChannels([]);
-    const url = req
-      ? `${process.env.REACT_APP_API_URL}/api/channels/${req}`
-      : `${process.env.REACT_APP_API_URL}/api/channels/`;
+  const fetchChannels = useCallback(
+    async (req: string | null) => {
+      setChannels([]);
+      const url = req
+        ? `${process.env.REACT_APP_API_URL}/api/channels/${req}`
+        : `${process.env.REACT_APP_API_URL}/api/channels/`;
 
-    sendRequest(
-      url,
-      'get',
-      {},
-      {
-        authorization: 'Bearer ' + state.token,
-      }
-    )
-      .then((response) => {
-        if (response) {
-          setChannels(response.channels);
+      const response = await sendRequest(
+        url,
+        'get',
+        {},
+        {
+          authorization: 'Bearer ' + state.token,
         }
-      })
-      .catch((err) => console.log(err));
-  };
+      );
+
+      if (response) {
+        setChannels(response.channels);
+      }
+    },
+    [sendRequest, state.token]
+  );
 
   useEffect(() => {
     let mounted = true;
-    sendRequest(
-      `${process.env.REACT_APP_API_URL}/api/channels`,
-      'get',
-      {},
-      {
-        authorization: 'Bearer ' + state.token,
-      }
-    )
-      .then((response) => {
-        setChannels(response.channels);
-      })
-      .catch((err) => console.log(err));
-
+    fetchChannels(null);
     return () => {
       mounted = false;
     };
-  }, [sendRequest, state.token]);
+  }, [fetchChannels]);
 
   return (
     <>
-      <CategoryTabs handleClick={handleClick} />
+      <CategoryTabs handleClick={fetchChannels} />
       {(isLoading || error) && (
         <Loader isLoading={isLoading} error={error} height="80%" />
       )}
       {channels && channels.length > 0 && !error && (
-        <GridList>
-          {channels.map((channel: ChannelModel) => (
-            <ChannelCard
-              key={channel.id}
-              id={channel.id}
-              members={channel.members}
-              name={channel.name}
-              description={channel.description}
-              handleJoinButtonClick={() => handleJoinButtonClick(channel.id)}
-            />
-          ))}
-        </GridList>
+        <Box width={{ xs: '80vw', sm: '70vw', lg: '76vw' }} margin="40px auto">
+          <Grid container spacing={3}>
+            {sortedChannels.map((channel: ChannelModel) => (
+              <ChannelCard
+                key={channel.id}
+                id={channel.id}
+                members={channel.members}
+                name={channel.name}
+                description={channel.description}
+                handleJoinButtonClick={() => joinChannel(channel.id)}
+              />
+            ))}
+          </Grid>
+        </Box>
       )}
     </>
   );

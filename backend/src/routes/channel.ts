@@ -1,16 +1,26 @@
 import { Router } from 'express';
-import { auth } from '../middlewares/auth';
 import { check } from 'express-validator';
 
+import { auth } from '../middlewares/auth';
 import {
-    createChannel,
     getChannels,
     getCategoryChannels,
     getSingleChannel,
-    joinChannel,
-    editChannel,
-    sendMessage,
-} from '../controllers/channel';
+} from '../controllers/channel/getChannel';
+import { createChannel } from '../controllers/channel/createChannel';
+import { joinChannel } from '../controllers/channel/joinChannel';
+import { editChannel } from '../controllers/channel/editChannel';
+import { sendMessage } from '../controllers/channel/sendMessage';
+
+// import {
+//     createChannel,
+//     getChannels,
+//     getCategoryChannels,
+//     getSingleChannel,
+//     joinChannel,
+//     editChannel,
+//     sendMessage,
+// } from '../controllers/channel';
 
 const channelRouter = Router();
 

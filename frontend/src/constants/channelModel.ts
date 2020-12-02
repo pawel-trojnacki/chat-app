@@ -19,6 +19,6 @@ export interface ChannelModel extends Document {
   createdAt: Date;
   description: string;
   category: CategoryType;
-  members: string[];
+  members: Array<string>;
   messages: MessageModel[];
 }

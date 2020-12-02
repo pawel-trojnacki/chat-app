@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import {
+  Grid,
   Card,
   CardContent,
   CardActions,
   Typography,
   Button,
   Badge,
+  Box,
 } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { People as PeopleIcon } from '@material-ui/icons';
@@ -21,15 +23,7 @@ export interface ChannelCardProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: '2%',
       padding: '10px',
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '42%',
-      },
-      [theme.breakpoints.up('md')]: {
-        width: '29%',
-      },
     },
     cardActions: {
       justifyContent: 'space-between',
@@ -47,27 +41,30 @@ const ChannelCard: FC<ChannelCardProps> = ({
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant="h4" component="h2">
-          {name}
-        </Typography>
-        <Typography variant="body1">{description}</Typography>
-      </CardContent>
-      <CardActions className={classes.cardActions}>
-        {/* <Typography variant="body2">{`Members: ${members.length}`}</Typography> */}
-        <Badge badgeContent={members.length} color="primary" max={999}>
-          <PeopleIcon />
-        </Badge>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleJoinButtonClick}
-        >
-          Join
-        </Button>
-      </CardActions>
-    </Card>
+    <Grid item xs={12} sm={6} md={4}>
+      <Card className={classes.root}>
+        <CardContent>
+          <Typography variant="h4" component="h2">
+            {name}
+          </Typography>
+          <Box minHeight={{ xs: 'auto', md: '50px' }}>
+            <Typography variant="body1">{description}</Typography>
+          </Box>
+        </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Badge badgeContent={members.length} color="primary" max={999}>
+            <PeopleIcon />
+          </Badge>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleJoinButtonClick}
+          >
+            Join
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
 

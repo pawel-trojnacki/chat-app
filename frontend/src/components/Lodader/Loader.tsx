@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { CircularProgress, Box, Typography } from '@material-ui/core';
 
-const Loader: FC<{
+interface LoaderProps {
   isLoading: boolean;
   error: null | string;
   height?: string;
-}> = ({ isLoading, error, height }) => {
+}
+
+const Loader: FC<LoaderProps> = ({ isLoading, error, height }) => {
   return (
     <Box
       width="100%"

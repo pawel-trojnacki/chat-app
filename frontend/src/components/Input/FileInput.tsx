@@ -1,20 +1,18 @@
 import React, { FC, FormEvent, useState, useRef, useEffect } from 'react';
-import { Box, Button, Typography, ButtonGroup } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Box, Button, ButtonGroup } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { CloudUpload } from '@material-ui/icons';
 
 const imagesUrl = `${process.env.REACT_APP_API_URL}/uploads/images`;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    image: {
-      width: '100%',
-      maxHeight: '65vh',
-      objectFit: 'cover',
-      objectPosition: 'center',
-    },
-  })
-);
+const useStyles = makeStyles({
+  image: {
+    width: '100%',
+    maxHeight: '55vh',
+    objectFit: 'cover',
+    objectPosition: 'center',
+  },
+});
 
 interface FileInputProps {
   label: string;
@@ -74,7 +72,6 @@ const FileInput: FC<FileInputProps> = ({
 
   return (
     <Box>
-      {/* {previewFile === `${imagesUrl}/sample avatar` ? null : ( */}
       <img
         alt="user avatar"
         src={previewFile || undefined}

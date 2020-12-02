@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import * as jwt from 'jsonwebtoken';
+import { RequestWithUser } from '../helpers/types';
 
 export const auth: RequestHandler = (req, res, next) => {
     if (req.method === 'OPTIONS') {
@@ -19,7 +20,7 @@ export const auth: RequestHandler = (req, res, next) => {
             );
 
             const userId = (decoded as any).user;
-            (req as any).user = userId;
+            (req as RequestWithUser).user = userId;
 
             next();
         } else {

@@ -15,7 +15,6 @@ const Alert = (props: AlertProps) => {
 const UserPage: FC = () => {
   const { state, dispatch } = useContext(AuthContext);
   const [error, isLoading, sendRequest] = useAxios();
-  // const [success, setSuccess] = useState(false);
 
   const [successOpen, setSuccessOpen] = useState(false);
   const [errorOpen, setErrorOpen] = useState(!!error);
@@ -24,7 +23,6 @@ const UserPage: FC = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setErrorOpen(false);
   };
 
@@ -35,57 +33,57 @@ const UserPage: FC = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setSuccessOpen(false);
   };
 
-  const handleTextInputSubmit = (values: { username: string }) => {
+  const handleTextInputSubmit = async (values: { username: string }) => {
     setSuccessOpen(false);
 
-    sendRequest(
+    const response = await sendRequest(
       `${process.env.REACT_APP_API_URL}/api/edit-username`,
       'patch',
       {
         username: values.username,
       },
       { Authorization: 'Bearer ' + state.token }
-    ).then((response) => {
-      if (response && response.user) {
-        dispatch({
-          type: AuthActionTypes.SetUserData,
-          payload: {
-            userData: response.user,
-          },
-        });
-        setSuccessOpen(true);
-      } else {
-        setErrorOpen(true);
-      }
-    });
+    );
+
+    if (response && response.user) {
+      dispatch({
+        type: AuthActionTypes.SetUserData,
+        payload: {
+          userData: response.user,
+        },
+      });
+      setSuccessOpen(true);
+    } else {
+      setErrorOpen(true);
+    }
   };
 
   const handleFileInputSubmit = async (avatar: any) => {
     setSuccessOpen(false);
     const formData = new FormData();
     formData.append('avatar', avatar);
-    sendRequest(
+
+    const response = await sendRequest(
       `${process.env.REACT_APP_API_URL}/api/upload-avatar`,
       'patch',
       formData,
       { Authorization: 'Bearer ' + state.token }
-    ).then((response) => {
-      if (response && response.user) {
-        dispatch({
-          type: AuthActionTypes.SetUserData,
-          payload: {
-            userData: response.user,
-          },
-        });
-        setSuccessOpen(true);
-      } else {
-        setErrorOpen(true);
-      }
-    });
+    );
+
+    if (response && response.user) {
+      dispatch({
+        type: AuthActionTypes.SetUserData,
+        payload: {
+          userData: response.user,
+        },
+      });
+      setSuccessOpen(true);
+    } else {
+      setErrorOpen(true);
+    }
   };
 
   return (

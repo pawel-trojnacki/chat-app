@@ -7,30 +7,8 @@ import {
   Typography,
   Avatar,
 } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      marginTop: theme.spacing(4),
-    },
-    rootGrid: {
-      flexWrap: 'nowrap',
-    },
-    gridContainer: {
-      alignItems: 'flex-end',
-    },
-    gridItem: {
-      paddingRight: '10px',
-    },
-    date: {
-      paddingBottom: '1px',
-    },
-    grey: {
-      color: theme.palette.grey[600],
-    },
-  })
-);
+import { useStyles } from './styles';
 
 export interface MessageProps {
   id: string;

@@ -1,6 +1,6 @@
 export const categories = [
   {
-    name: 'recent',
+    name: 'most popular',
     req: null,
   },
   {

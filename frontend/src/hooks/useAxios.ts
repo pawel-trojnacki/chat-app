@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 type methodType = 'get' | 'post' | 'patch' | 'delete';
 

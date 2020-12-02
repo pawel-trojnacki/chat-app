@@ -4,7 +4,6 @@ import { Box, Grid, Hidden } from '@material-ui/core';
 
 import { AuthContext } from '../context/context';
 import LoginForm from '../components/LoginForm/LoginForm';
-import RegistrationForm from '../components/RegistrationForm/RegistrationForm';
 import AnimatedSvg from '../components/AnimatedSvg/AnimatedSvg';
 import AuthBox from '../components/AuthBox/AuthBox';
 import { Urls } from '../constants/urls';
@@ -44,7 +43,7 @@ const Auth = () => {
               text="Already have an account?"
               buttonText="Log in"
             >
-              <RegistrationForm />
+              <LoginForm registrationForm />
             </AuthBox>
           )}
         </Grid>

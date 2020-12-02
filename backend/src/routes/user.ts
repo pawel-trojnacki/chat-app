@@ -1,13 +1,18 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import {
-    signup,
-    login,
-    getUser,
-    editUsername,
-    uploadAvatar,
-} from '../controllers/user';
+// import {
+//     signup,
+//     login,
+//     getUser,
+//     editUsername,
+//     uploadAvatar,
+// } from '../controllers/user';
+import { signup } from '../controllers/user/signup';
+import { login } from '../controllers/user/login';
+import { getUser } from '../controllers/user/getUser';
+import { editUsername } from '../controllers/user/editUsername';
+import { uploadAvatar } from '../controllers/user/uploadAvatar';
 import { auth } from '../middlewares/auth';
 
 const userRouter = Router();

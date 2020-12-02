@@ -8,33 +8,9 @@ import {
   Box,
 } from '@material-ui/core';
 import { AddCircle, Explore } from '@material-ui/icons';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-
 import { Urls } from '../../constants/urls';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    linkElement: {
-      textTransform: 'none',
-      textDecoration: 'none',
-      color: theme.palette.text.primary,
-      display: 'flex',
-      alignItems: 'center',
-    },
-    icon: {
-      color: theme.palette.text.primary,
-    },
-    subtitle: {
-      textAlign: 'center',
-      margin: '20px auto',
-    },
-    channelTitle: {
-      textAlign: 'center',
-      width: '100%',
-    },
-  })
-);
+import { useStyles } from './styles';
 
 const Drawer: FC<{
   userChannels: [{ id: string; channel: { name: string } }] | null;
@@ -93,32 +69,6 @@ const Drawer: FC<{
           ))}
         </List>
       )}
-
-      {/* {state.userData &&
-        state.userData.channels &&
-        state.userData.channels.length > 0 && (
-          <List>
-            {state.userData.channels.map(
-              ({ id, channel }: { id: string; channel: any }) => (
-                <Link
-                  key={id}
-                  to={`/dashboard/channels/${id}`}
-                  className={classes.linkElement}
-                >
-                  <ListItem button>
-                    <Typography
-                      variant="h5"
-                      component="p"
-                      className={classes.channelTitle}
-                    >
-                      {channel.name}
-                    </Typography>
-                  </ListItem>
-                </Link>
-              )
-            )}
-          </List>
-        )} */}
     </div>
   );
 };

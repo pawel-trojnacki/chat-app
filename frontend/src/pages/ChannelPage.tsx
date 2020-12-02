@@ -26,26 +26,28 @@ const ChannelPage: FC = () => {
   };
 
   useEffect(() => {
-    sendRequest(
-      `${process.env.REACT_APP_API_URL}/api/channel/${id}`,
-      'get',
-      {},
-      { Authorization: 'Bearer ' + state.token }
-    )
-      .then((response) => {
-        if (response && response.channel) {
-          setChannel(response.channel);
-          setMessages(response.channel.messages);
+    const fetchMessages = async () => {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_API_URL}/api/channel/${id}`,
+        'get',
+        {},
+        { Authorization: 'Bearer ' + state.token }
+      );
+
+      if (response && response.channel) {
+        setChannel(response.channel);
+        setMessages(response.channel.messages);
+      }
+
+      const socket = openSocket(`${process.env.REACT_APP_API_URL}`);
+      socket.on('channel', (data: any) => {
+        if (data.action === 'get-channel') {
+          setMessages(data.messages);
         }
-      })
-      .then(() => {
-        const socket = openSocket(`${process.env.REACT_APP_API_URL}`);
-        socket.on('channel', (data: any) => {
-          if (data.action === 'get-channel') {
-            setMessages(data.messages);
-          }
-        });
       });
+    };
+
+    fetchMessages();
   }, [id, state.token, sendRequest]);
 
   useEffect(() => {
