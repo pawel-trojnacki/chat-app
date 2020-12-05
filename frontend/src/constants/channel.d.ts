@@ -17,6 +17,7 @@ export interface ChannelModel extends Document {
   admin: string;
   name: string;
   createdAt: Date;
+  image: string;
   description: string;
   category: CategoryType;
   members: Array<string>;

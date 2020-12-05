@@ -6,7 +6,7 @@ import { useAxios } from '../hooks/useAxios';
 import Loader from '../components/Lodader/Loader';
 import ChannelCard from '../components/ChannelCard/ChannelCard';
 import CategoryTabs from '../components/CategoryTabs/CategoryTabs';
-import { ChannelModel } from '../constants/channelModel';
+import { ChannelModel } from '../constants/channel';
 import { compareChannels } from '../utils/compare';
 
 const ChannelsPage: FC = () => {
@@ -73,6 +73,7 @@ const ChannelsPage: FC = () => {
               <ChannelCard
                 key={channel.id}
                 id={channel.id}
+                image={channel.image}
                 members={channel.members}
                 name={channel.name}
                 description={channel.description}

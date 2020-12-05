@@ -20,6 +20,7 @@
     "formik": "^2.2.5",
     "formik-material-ui": "^3.0.0",
     "framer-motion": "^2.9.4",
+    "material-ui-dropzone": "^3.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

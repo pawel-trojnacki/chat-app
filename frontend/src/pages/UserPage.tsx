@@ -5,8 +5,8 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { AuthContext, AuthActionTypes } from '../context/context';
 import { useAxios } from '../hooks/useAxios';
 import Card from '../components/Card/Card';
-import TextInput from '../components/Input/TextInput';
-import FileInput from '../components/Input/FileInput';
+import TextField from '../components/TextField/TextField';
+import FileField from '../components/FileField/FileField';
 
 const Alert = (props: AlertProps) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -91,7 +91,7 @@ const UserPage: FC = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Card withoutPadding>
-            <FileInput
+            <FileField
               label="avatar"
               handleFileInputSubmit={handleFileInputSubmit}
               currentFile={state.userData.avatar}
@@ -102,7 +102,7 @@ const UserPage: FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Card>
-            <TextInput
+            <TextField
               title="Username"
               label="username"
               handleTextInputSubmit={handleTextInputSubmit}

@@ -12,16 +12,6 @@ import { joinChannel } from '../controllers/channel/joinChannel';
 import { editChannel } from '../controllers/channel/editChannel';
 import { sendMessage } from '../controllers/channel/sendMessage';
 
-// import {
-//     createChannel,
-//     getChannels,
-//     getCategoryChannels,
-//     getSingleChannel,
-//     joinChannel,
-//     editChannel,
-//     sendMessage,
-// } from '../controllers/channel';
-
 const channelRouter = Router();
 
 channelRouter.use(auth);
@@ -30,7 +20,7 @@ channelRouter.post(
     '/api/channel/new',
     [
         check('name').isLength({ min: 3, max: 24 }),
-        check('description').isLength({ min: 5, max: 100 }),
+        check('description').isLength({ min: 8, max: 100 }),
         check('category').not().isEmpty(),
     ],
     createChannel

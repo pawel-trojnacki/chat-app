@@ -3,6 +3,7 @@ import { Urls } from '../constants/urls';
 import UserPage from '../pages/UserPage';
 import ChannelsPage from '../pages/ChannelsPage';
 import ChannelPage from '../pages/ChannelPage';
+import CreateChannelPage from '../pages/CreateChannelPage';
 
 export interface RouteProps {
   path: string;
@@ -25,6 +26,11 @@ export const routes: RouteProps[] = [
   {
     path: Urls.UserAccount,
     component: UserPage,
+    isPrivate: true,
+  },
+  {
+    path: Urls.CreateChannel,
+    component: CreateChannelPage,
     isPrivate: true,
   },
 ];

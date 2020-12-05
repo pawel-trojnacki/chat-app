@@ -18,6 +18,7 @@ export interface ChannelModel extends Document {
     admin: string;
     name: string;
     createdAt: Date;
+    image: string;
     description: string;
     category: Category;
     members: string[];
@@ -38,6 +39,7 @@ const channelSchema: Schema<ChannelModel> = new Schema({
         type: Date,
         default: new Date(Date.now()),
     },
+    image: String,
     description: String,
     category: String,
     members: [

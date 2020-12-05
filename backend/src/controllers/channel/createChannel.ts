@@ -1,9 +1,10 @@
 import { RequestHandler } from 'express';
 import { validationResult } from 'express-validator';
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import Channel, { ChannelModel } from '../../models/channel';
 import User, { UserModel, ChannelRoles } from '../../models/user';
-import { RequestWithUser } from '../../helpers/types';
+import { RequestWithUser, MimetypeTypes } from '../../helpers/types';
 
 export const createChannel: RequestHandler = async (req, res) => {
     const errors = validationResult(req);
@@ -30,10 +31,29 @@ export const createChannel: RequestHandler = async (req, res) => {
         });
     }
 
+    let uploadedImage: any;
+    if (req.files && req.files.image) {
+        uploadedImage = req.files.image;
+        let ext: string;
+        if (uploadedImage.mimetype === MimetypeTypes.Jpg) {
+            ext = '.jpg';
+        } else if (uploadedImage.mimetype === MimetypeTypes.Png) {
+            ext = '.png';
+        } else {
+            return res.status(422).json({ error: 'Invalid file type' });
+        }
+        uploadedImage.name = uuidv4() + ext;
+        uploadedImage.mv('uploads/images/' + uploadedImage.name);
+    }
+
     const channel = new Channel({
         admin,
         name,
         createdAt: new Date(Date.now()),
+        image:
+            req.files && req.files.image
+                ? req.files.image.name
+                : 'placeholder-image.jpg',
         description,
         category,
         members: [admin],
@@ -67,5 +87,9 @@ export const createChannel: RequestHandler = async (req, res) => {
             .json({ error: 'Something went wrong. Please try again.' });
     }
 
-    res.status(201).json({ channel });
+    require('../../socket')
+        .getIo()
+        .emit('channel-info', { action: 'join-channel', channel: channel });
+
+    res.status(201).json({ channel: channel.toObject({ getters: true }) });
 };

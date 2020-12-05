@@ -31,7 +31,7 @@ const Drawer: FC<{
           </Link>
         </ListItem>
         <ListItem button className={classes.linkElement}>
-          <Link to="/dashboard/channels" className={classes.linkElement}>
+          <Link to={Urls.CreateChannel} className={classes.linkElement}>
             <ListItemIcon className={classes.icon}>
               <AddCircle />
             </ListItemIcon>

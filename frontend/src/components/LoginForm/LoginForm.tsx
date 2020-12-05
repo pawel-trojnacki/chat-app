@@ -1,7 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Formik, Form, Field } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { Formik, Form } from 'formik';
 import { Box, Button, CircularProgress } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { object, string } from 'yup';
@@ -9,6 +8,7 @@ import { object, string } from 'yup';
 import { useAxios } from '../../hooks/useAxios';
 import { AuthContext, AuthActionTypes } from '../../context/context';
 import { Urls } from '../../constants/urls';
+import FormikTextInput from '../FormikTextInput/FormikTextInput';
 
 export interface loginValuesModel {
   username?: string;
@@ -100,38 +100,19 @@ const LoginForm: FC<{ registrationForm?: boolean }> = ({
       >
         <Form autoComplete="off">
           {registrationForm && (
-            <Box paddingBottom={3}>
-              <Field
-                name="username"
-                type="text"
-                component={TextField}
-                label="Username"
-                disabled={isLoading}
-                fullWidth
-              />
-            </Box>
+            <FormikTextInput
+              name="username"
+              label="Username"
+              disabled={isLoading}
+            />
           )}
-
-          <Box paddingBottom={3}>
-            <Field
-              name="email"
-              type="text"
-              component={TextField}
-              label="Email"
-              disabled={isLoading}
-              fullWidth
-            />
-          </Box>
-          <Box paddingBottom={3}>
-            <Field
-              name="password"
-              type="password"
-              component={TextField}
-              label="Password"
-              disabled={isLoading}
-              fullWidth
-            />
-          </Box>
+          <FormikTextInput name="email" label="Email" disabled={isLoading} />
+          <FormikTextInput
+            name="password"
+            label="Password"
+            disabled={isLoading}
+            type="password"
+          />
           <Box marginY={3}>
             <Button fullWidth type="submit" variant="contained" color="primary">
               {registrationForm ? 'Sign in' : 'Log in'}

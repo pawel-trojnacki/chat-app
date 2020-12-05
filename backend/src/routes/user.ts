@@ -1,13 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-// import {
-//     signup,
-//     login,
-//     getUser,
-//     editUsername,
-//     uploadAvatar,
-// } from '../controllers/user';
 import { signup } from '../controllers/user/signup';
 import { login } from '../controllers/user/login';
 import { getUser } from '../controllers/user/getUser';

@@ -1,4 +1,4 @@
-import { ChannelModel } from '../constants/channelModel';
+import { ChannelModel } from '../constants/channel';
 
 export const compareChannels = (a: ChannelModel, b: ChannelModel) => {
   if (a.members.length < b.members.length) {

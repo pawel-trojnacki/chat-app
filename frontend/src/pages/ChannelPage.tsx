@@ -5,8 +5,8 @@ import { Box, List } from '@material-ui/core';
 
 import { useAxios } from '../hooks/useAxios';
 import { AuthContext } from '../context/context';
-import MessageInput from '../components/Input/MessageInput';
-import Loader from '../components/Lodader/Loader';
+import MessageField from '../components/MessageField/MessageField';
+// import Loader from '../components/Lodader/Loader';
 import Message, { MessageProps } from '../components/Message/Message';
 
 interface ParamType {
@@ -79,7 +79,7 @@ const ChannelPage: FC = () => {
               ))}
             </List>
           </Box>
-          <MessageInput id={id} />
+          <MessageField id={id} />
         </>
       )}
       <div ref={messagesEnd}></div>

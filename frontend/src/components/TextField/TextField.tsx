@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { Formik, Form } from 'formik';
 import { Button, Box, Typography } from '@material-ui/core';
 import { object, string } from 'yup';
+
+import FormikTextInput from '../FormikTextInput/FormikTextInput';
 
 export interface TextInputProps {
   title: string;
@@ -15,7 +16,7 @@ export interface TextInputProps {
   buttonText?: string;
 }
 
-const TextInput: FC<TextInputProps> = ({
+const TextField: FC<TextInputProps> = ({
   title,
   label,
   handleTextInputSubmit,
@@ -45,16 +46,11 @@ const TextInput: FC<TextInputProps> = ({
         })}
       >
         <Form autoComplete="off">
-          <Box paddingBottom={3}>
-            <Field
-              name={label}
-              label={label}
-              type="text"
-              component={TextField}
-              disabled={disabledButton}
-              fullWidth
-            />
-          </Box>
+          <FormikTextInput
+            name={label}
+            label={label}
+            disabled={disabledButton}
+          />
           <Button
             type="submit"
             variant="contained"
@@ -69,4 +65,4 @@ const TextInput: FC<TextInputProps> = ({
   );
 };
 
-export default TextInput;
+export default TextField;
