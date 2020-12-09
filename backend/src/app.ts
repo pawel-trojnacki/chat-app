@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import expressFileupload from 'express-fileupload';
 import path from 'path';
+const cloudinary = require('cloudinary').v2;
+
 import userRouter from './routes/user';
 import channelRouter from './routes/channel';
 

@@ -1,25 +1,21 @@
 import React, { FC, ReactNode, useEffect, useContext, useState } from 'react';
-import { Redirect, useHistory, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import openSocket from 'socket.io-client';
 import {
-  AppBar,
   CssBaseline,
   Drawer,
   Hidden,
-  IconButton,
-  Toolbar,
   Typography,
   Box,
   CircularProgress,
 } from '@material-ui/core/';
-import { Menu as MenuIcon, AccountCircle, ExitToApp } from '@material-ui/icons';
 import { useTheme } from '@material-ui/core/styles';
 
-import AppDrawer from '../components/Drawer/Drawer';
-import { AuthContext, AuthActionTypes } from '../context/context';
-import { useAxios } from '../hooks/useAxios';
+import AppDrawer from '../../components/Drawer/Drawer';
+import NavBar from '../../components/NavBar/NavBar';
+import { AuthContext, AuthActionTypes } from '../../context/context';
+import { useAxios } from '../../hooks/useAxios';
 import { useStyles } from './styles';
-import { Urls } from '../constants/urls';
 
 interface UserTemplateProps {
   window?: () => Window;
@@ -27,23 +23,24 @@ interface UserTemplateProps {
 }
 
 const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
-  const history = useHistory();
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const { state, dispatch } = useContext(AuthContext);
+  const [error, isLoading, sendRequest] = useAxios();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [pageTitle, setPageTitle] = useState<string>('Dashboard');
   const [userChannels, setUserChannels] = useState<any>(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleCloseDrawer = () => {
+    setMobileOpen(false);
+  };
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-  const { state, dispatch } = useContext(AuthContext);
-  const [error, isLoading, sendRequest] = useAxios();
 
   const handleLogoutButtonClick = () => {
     dispatch({
@@ -52,35 +49,16 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
   };
 
   useEffect(() => {
-    return history.listen((location) => {
-      switch (location.pathname as any) {
-        case Urls.Explore:
-          setPageTitle('Explore');
-          break;
-        case Urls.UserAccount:
-          setPageTitle('Account');
-          break;
-        // case Urls.Explore + '/5fbc1867dc33cf0321cbcc6a':
-        //   setPageTitle('Channel');
-        //   break;
-        default:
-          setPageTitle('Dashboard');
-          break;
-      }
-    });
-  }, [history, pageTitle]);
-
-  useEffect(() => {
     let mounted = true;
 
-    if (state.isAuthenticated) {
-      sendRequest(
-        `${process.env.REACT_APP_API_URL}/api/user`,
-        'get',
-        {},
-        { Authorization: 'Bearer ' + state.token }
-      )
-        .then((response) => {
+    if (mounted) {
+      if (state.isAuthenticated) {
+        sendRequest(
+          `${process.env.REACT_APP_API_URL}/api/user`,
+          'get',
+          {},
+          { Authorization: 'Bearer ' + state.token }
+        ).then((response) => {
           if (response && response.user) {
             dispatch({
               type: AuthActionTypes.SetUserData,
@@ -88,26 +66,73 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
                 userData: response.user,
               },
             });
-            setUserChannels(response.user.channels);
           }
-        })
-        .then(() => {
-          const socket = openSocket(`${process.env.REACT_APP_API_URL}`);
-          socket.on('channel-info', (data: any) => {
-            if (data.action === 'join-channel') {
-              setUserChannels((prevChannels: []) => [
-                ...prevChannels,
-                { channel: { name: data.channel.name, id: data.channel._id } },
-              ]);
-              console.log(data);
-            }
-          });
         });
+      }
     }
     return () => {
       mounted = false;
     };
   }, [sendRequest, state.token, dispatch, state.isAuthenticated]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      if (state.isAuthenticated) {
+        sendRequest(
+          `${process.env.REACT_APP_API_URL}/api/user-channels`,
+          'get',
+          {},
+          { Authorization: 'Bearer ' + state.token }
+        ).then((response) => {
+          if (response && response.channels) {
+            setUserChannels(response.channels);
+          }
+        });
+      }
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [sendRequest, state.isAuthenticated, state.token]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      const socket = openSocket(`${process.env.REACT_APP_API_URL}`);
+      socket.on('channel-info', (data: any) => {
+        if (data.action === 'join-channel') {
+          setUserChannels((prevChannels: []) => [
+            ...prevChannels,
+            data.channel,
+          ]);
+        } else if (data.action === 'edit-channel') {
+          setUserChannels(data.channels);
+        }
+      });
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      const expiration = localStorage.getItem('expiration');
+      if (expiration) {
+        const expirationDate = new Date(JSON.parse(expiration));
+        if (expirationDate < new Date()) {
+          dispatch({
+            type: AuthActionTypes.Logout,
+          });
+        }
+      }
+    }
+  }, [state.isAuthenticated, dispatch]);
 
   if (!state.isAuthenticated) {
     return <Redirect to="/" />;
@@ -131,37 +156,11 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
       {!isLoading && (
         <div className={classes.root}>
           <CssBaseline />
-          <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open menu"
-                edge="start"
-                onClick={handleDrawerToggle}
-                className={classes.menuButton}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h2" component="h1" noWrap>
-                {pageTitle}
-              </Typography>
-            </Toolbar>
-            <Toolbar className={classes.iconsWrapper}>
-              <Link to={Urls.UserAccount} className={classes.link}>
-                <IconButton color="inherit" aria-label="user account">
-                  <AccountCircle />
-                </IconButton>
-              </Link>
-              <IconButton
-                color="inherit"
-                aria-label="log out"
-                onClick={handleLogoutButtonClick}
-              >
-                <ExitToApp />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <nav className={classes.drawer} aria-label="mailbox folders">
+          <NavBar
+            handleDrawerToggle={handleDrawerToggle}
+            handleLogoutButtonClick={handleLogoutButtonClick}
+          />
+          <nav className={classes.drawer} aria-label="menu">
             <Hidden mdUp implementation="css">
               <Drawer
                 container={container}
@@ -178,7 +177,10 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
               >
                 <div>
                   <div className={classes.toolbar} />
-                  <AppDrawer userChannels={userChannels} />
+                  <AppDrawer
+                    userChannels={userChannels}
+                    handleCloseDrawer={handleCloseDrawer}
+                  />
                 </div>
               </Drawer>
             </Hidden>
@@ -192,7 +194,10 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
               >
                 <div>
                   <div className={classes.toolbar} />
-                  <AppDrawer userChannels={userChannels} />
+                  <AppDrawer
+                    userChannels={userChannels}
+                    handleCloseDrawer={handleCloseDrawer}
+                  />
                 </div>
               </Drawer>
             </Hidden>

@@ -5,7 +5,7 @@ import { object, string } from 'yup';
 
 import FormikTextInput from '../FormikTextInput/FormikTextInput';
 
-export interface TextInputProps {
+export interface TextFieldProps {
   title: string;
   label: string;
   handleTextInputSubmit: (values: any) => void;
@@ -14,9 +14,10 @@ export interface TextInputProps {
   disabledButton: boolean;
   initialValue?: string;
   buttonText?: string;
+  multiline?: boolean;
 }
 
-const TextField: FC<TextInputProps> = ({
+const TextField: FC<TextFieldProps> = ({
   title,
   label,
   handleTextInputSubmit,
@@ -25,6 +26,7 @@ const TextField: FC<TextInputProps> = ({
   disabledButton,
   initialValue,
   buttonText,
+  multiline,
 }) => {
   return (
     <Box>
@@ -50,15 +52,18 @@ const TextField: FC<TextInputProps> = ({
             name={label}
             label={label}
             disabled={disabledButton}
+            multiline={multiline}
           />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={disabledButton}
-          >
-            {buttonText || 'Save'}
-          </Button>
+          <Box textAlign="right">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={disabledButton}
+            >
+              {buttonText || 'Save'}
+            </Button>
+          </Box>
         </Form>
       </Formik>
     </Box>

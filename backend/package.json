@@ -11,10 +11,13 @@
     "license": "ISC",
     "dependencies": {
         "@types/cors": "^2.8.8",
-        "@types/multer": "^1.4.4",
+        "@types/multer": "^1.4.5",
+        "aws-sdk": "^2.807.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
+        "cloudinary": "^1.23.0",
         "cors": "^2.8.5",
+        "datauri": "^3.0.0",
         "express": "^4.17.1",
         "express-fileupload": "^1.2.0",
         "express-validator": "^6.6.1",
@@ -27,6 +30,7 @@
         "uuid": "^8.3.1"
     },
     "devDependencies": {
+        "@types/aws-sdk": "^2.7.0",
         "@types/bcryptjs": "^2.4.2",
         "@types/body-parser": "^1.19.0",
         "@types/express": "^4.17.9",

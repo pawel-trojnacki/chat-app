@@ -6,16 +6,6 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      backgroundColor: theme.palette.grey[100],
-    },
-    drawer: {
-      [theme.breakpoints.up('md')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-    },
-    appBar: {
-      display: 'flex',
       flexWrap: 'nowrap',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -29,16 +19,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         display: 'none',
       },
-    },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      minHeight: '100vh',
-      maxWidth: '100vw',
     },
     iconsWrapper: {
       marginRight: '1%',

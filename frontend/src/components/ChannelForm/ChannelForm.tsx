@@ -7,6 +7,7 @@ import DropzoneField from '../DropzoneField/DropzoneField';
 import { FormikStepper, FormikStep } from '../FormikStepper/FormikStepper';
 import { categories } from '../../constants/categories';
 import { FormikValues } from 'formik';
+import { motion } from 'framer-motion';
 
 const initialChannelFormValues = {
   name: '',
@@ -23,7 +24,11 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
 
   const formCategories = categories.slice(1);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
       <FormikStepper
         initialValues={initialChannelFormValues}
         onSubmit={(values) => handleSubmit(values, file)}
@@ -70,7 +75,7 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
           />
         </FormikStep>
       </FormikStepper>
-    </div>
+    </motion.div>
   );
 };
 

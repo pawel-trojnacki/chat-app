@@ -12,34 +12,46 @@ import { Link } from 'react-router-dom';
 import { Urls } from '../../constants/urls';
 import { useStyles } from './styles';
 
-const Drawer: FC<{
-  userChannels: [{ id: string; channel: { name: string } }] | null;
-}> = ({ userChannels }) => {
+import { ChannelInfoType } from '../../constants/channel';
+
+interface DrawerProps {
+  userChannels: ChannelInfoType[] | null;
+  handleCloseDrawer: () => void;
+}
+const Drawer: FC<DrawerProps> = ({ userChannels, handleCloseDrawer }) => {
   const classes = useStyles();
   return (
     <div>
       <Divider />
       <List>
-        <ListItem button>
-          <Link to={Urls.Explore} className={classes.linkElement}>
+        <Link
+          to={Urls.Explore}
+          className={classes.linkElement}
+          onClick={handleCloseDrawer}
+        >
+          <ListItem button>
             <ListItemIcon className={classes.icon}>
               <Explore />
             </ListItemIcon>
             <Typography variant="h5" component="span">
               Explore channels
             </Typography>
-          </Link>
-        </ListItem>
-        <ListItem button className={classes.linkElement}>
-          <Link to={Urls.CreateChannel} className={classes.linkElement}>
+          </ListItem>
+        </Link>
+        <Link
+          to={Urls.CreateChannel}
+          className={classes.linkElement}
+          onClick={handleCloseDrawer}
+        >
+          <ListItem button className={classes.linkElement}>
             <ListItemIcon className={classes.icon}>
               <AddCircle />
             </ListItemIcon>
             <Typography variant="h5" component="span">
               Create channel
             </Typography>
-          </Link>
-        </ListItem>
+          </ListItem>
+        </Link>
       </List>
       <Divider />
       <Box paddingTop={2}>
@@ -50,11 +62,12 @@ const Drawer: FC<{
 
       {userChannels && userChannels.length > 0 && (
         <List>
-          {userChannels.map(({ channel }: { channel: any }) => (
+          {userChannels.map((channel) => (
             <Link
-              key={channel.id}
-              to={`/dashboard/channels/${channel.id}`}
+              key={channel._id}
+              to={`/dashboard/channels/${channel._id}`}
               className={classes.linkElement}
+              onClick={handleCloseDrawer}
             >
               <ListItem button>
                 <Typography

@@ -6,11 +6,14 @@ import {
     getChannels,
     getCategoryChannels,
     getSingleChannel,
+    getChannelInfo,
+    getUserChannels,
 } from '../controllers/channel/getChannel';
 import { createChannel } from '../controllers/channel/createChannel';
 import { joinChannel } from '../controllers/channel/joinChannel';
 import { editChannel } from '../controllers/channel/editChannel';
 import { sendMessage } from '../controllers/channel/sendMessage';
+import channel from '../models/channel';
 
 const channelRouter = Router();
 
@@ -30,9 +33,13 @@ channelRouter.get('/api/channels', getChannels);
 
 channelRouter.get('/api/channels/:category', getCategoryChannels);
 
+channelRouter.get('/api/user-channels', getUserChannels);
+
 channelRouter.patch('/api/join-channel/:channelId', joinChannel);
 
 channelRouter.get('/api/channel/:channelId', getSingleChannel);
+
+channelRouter.get('/api/channel-info/:channelId', getChannelInfo);
 
 channelRouter.patch('/api/edit-channel/:channelId', editChannel);
 

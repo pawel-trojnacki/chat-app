@@ -3,4 +3,5 @@ export enum Urls {
   Channel = '/dashboard/channels/:id',
   UserAccount = '/dashboard/user',
   CreateChannel = '/dashboard/create-channel',
+  EditChannel = '/dashboard/edit-channel/:id',
 }

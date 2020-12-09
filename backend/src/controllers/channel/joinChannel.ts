@@ -12,7 +12,10 @@ export const joinChannel: RequestHandler = async (req, res) => {
     let user: UserModel | null;
 
     try {
-        channel = await Channel.findById(channelId);
+        channel = await Channel.findById(
+            channelId,
+            'name admin image description members'
+        ).exec();
     } catch {
         return res
             .status(500)

@@ -7,6 +7,7 @@ import {
   Typography,
   Avatar,
 } from '@material-ui/core';
+import { motion } from 'framer-motion';
 
 import { useStyles } from './styles';
 
@@ -25,34 +26,40 @@ const Message: FC<MessageProps> = ({ id, createdAt, content, creator }) => {
   const classes = useStyles();
   return (
     <ListItem className={classes.root}>
-      <Grid container className={classes.rootGrid} spacing={2}>
-        <Grid item>
-          <Avatar
-            src={`${process.env.REACT_APP_API_URL}/uploads/images/${creator.avatar}`}
-          />
-        </Grid>
-        <Grid item>
-          <Box>
-            <Grid container className={classes.gridContainer}>
-              <Grid item className={classes.gridItem}>
-                <Typography variant="h5" component="h2">
-                  {creator.username}
-                </Typography>
+      <motion.div
+        initial={{ opacity: 0, y: '10%' }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Grid container className={classes.rootGrid} spacing={2}>
+          <Grid item>
+            <Avatar
+              src={`${process.env.REACT_APP_IMAGES_URL}/${creator.avatar}`}
+            />
+          </Grid>
+          <Grid item>
+            <Box>
+              <Grid container className={classes.gridContainer}>
+                <Grid item className={classes.gridItem}>
+                  <Typography variant="h5" component="h2">
+                    {creator.username}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    variant="body2"
+                    color="secondary"
+                    className={`${classes.grey} ${classes.date}`}
+                  >
+                    {createdAt.toLocaleString()}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography
-                  variant="body2"
-                  color="secondary"
-                  className={`${classes.grey} ${classes.date}`}
-                >
-                  {createdAt.toLocaleString()}
-                </Typography>
-              </Grid>
-            </Grid>
-            <ListItemText>{content}</ListItemText>
-          </Box>
+              <ListItemText>{content}</ListItemText>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </motion.div>
     </ListItem>
   );
 };

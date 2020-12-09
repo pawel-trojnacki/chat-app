@@ -1,8 +1,10 @@
 import React, { FC, useEffect, useContext, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid, Box } from '@material-ui/core';
+
 import { AuthContext } from '../context/context';
 import { useAxios } from '../hooks/useAxios';
+import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import Loader from '../components/Lodader/Loader';
 import ChannelCard from '../components/ChannelCard/ChannelCard';
 import CategoryTabs from '../components/CategoryTabs/CategoryTabs';
@@ -10,7 +12,7 @@ import { ChannelModel } from '../constants/channel';
 import { compareChannels } from '../utils/compare';
 
 const ChannelsPage: FC = () => {
-  const history = useHistory();
+  let history = useHistory();
   const [channels, setChannels] = useState<ChannelModel[]>([]);
   const { state } = useContext(AuthContext);
   const [error, isLoading, sendRequest] = useAxios();
@@ -54,19 +56,21 @@ const ChannelsPage: FC = () => {
 
   useEffect(() => {
     let mounted = true;
-    fetchChannels(null);
+    if (mounted) {
+      fetchChannels(null);
+    }
     return () => {
       mounted = false;
     };
   }, [fetchChannels]);
 
   return (
-    <>
+    <PageTemplate pageTitle="Explore">
       <CategoryTabs handleClick={fetchChannels} />
       {(isLoading || error) && (
-        <Loader isLoading={isLoading} error={error} height="80%" />
+        <Loader isLoading={isLoading} error={error} height="70vh" />
       )}
-      {channels && channels.length > 0 && !error && (
+      {channels && channels.length > 0 && !error && !isLoading && (
         <Box width={{ xs: '80vw', sm: '70vw', lg: '76vw' }} margin="40px auto">
           <Grid container spacing={3}>
             {sortedChannels.map((channel: ChannelModel) => (
@@ -83,7 +87,7 @@ const ChannelsPage: FC = () => {
           </Grid>
         </Box>
       )}
-    </>
+    </PageTemplate>
   );
 };
 

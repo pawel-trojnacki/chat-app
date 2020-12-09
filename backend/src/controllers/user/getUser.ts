@@ -6,12 +6,9 @@ export const getUser: RequestHandler = async (req, res) => {
     let user: UserModel | null;
 
     try {
-        user = await User.findById((req as RequestWithUser).user)
-            .select('-password')
-            .populate({
-                path: 'channels.channel',
-                select: 'name createdAt category admin members',
-            });
+        user = await User.findById((req as RequestWithUser).user).select(
+            '-password'
+        );
     } catch {
         return res
             .status(500)

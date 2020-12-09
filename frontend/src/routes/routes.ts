@@ -4,6 +4,7 @@ import UserPage from '../pages/UserPage';
 import ChannelsPage from '../pages/ChannelsPage';
 import ChannelPage from '../pages/ChannelPage';
 import CreateChannelPage from '../pages/CreateChannelPage';
+import EditChannelPage from '../pages/EditChannelPage';
 
 export interface RouteProps {
   path: string;
@@ -31,6 +32,11 @@ export const routes: RouteProps[] = [
   {
     path: Urls.CreateChannel,
     component: CreateChannelPage,
+    isPrivate: true,
+  },
+  {
+    path: Urls.EditChannel,
+    component: EditChannelPage,
     isPrivate: true,
   },
 ];

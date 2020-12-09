@@ -44,8 +44,13 @@ export const AuthContext = createContext<{
 const AuthReducer = (state: AuthStateType, action: AuthActions) => {
   switch (action.type) {
     case AuthActionTypes.Login:
+      const expiration = new Date(new Date().getTime() + 1000 * 36000);
       localStorage.setItem('user', JSON.stringify(action.payload!.user));
       localStorage.setItem('token', JSON.stringify(action.payload!.token));
+      localStorage.setItem(
+        'expiration',
+        JSON.stringify(expiration.toISOString())
+      );
       return {
         ...state,
         isAuthenticated: true,

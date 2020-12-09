@@ -11,7 +11,7 @@ const Loader: FC<LoaderProps> = ({ isLoading, error, height }) => {
   return (
     <Box
       width="100%"
-      height={height || '100%'}
+      height={height || '80vh'}
       display="flex"
       justifyContent="center"
       alignItems="center"

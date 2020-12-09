@@ -5,11 +5,9 @@ import ImagePreview from '../ImagePreview/ImagePreview';
 import FileInput from '../FileInput/FileInput';
 import { useReadFile } from '../../hooks/useReadFile';
 
-const imagesUrl = `${process.env.REACT_APP_API_URL}/uploads/images`;
-
 interface FileInputProps {
   label: string;
-  handleFileInputSubmit: (avatar: any) => Promise<void>;
+  handleFileInputSubmit: (avatar: any) => void;
   currentFile: string;
   disabledButton: boolean;
   uploadButtonText?: string;
@@ -26,7 +24,7 @@ const FileField: FC<FileInputProps> = ({
   const fileInput = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<any>(null);
   const [previewFile, setPreviewFile] = useState<string>(
-    `${imagesUrl}/${currentFile}`
+    `${process.env.REACT_APP_IMAGES_URL}/${currentFile}`
   );
 
   const handleSubmit = (e: FormEvent) => {
@@ -46,7 +44,7 @@ const FileField: FC<FileInputProps> = ({
       <ImagePreview file={previewFile} />
       <Box paddingX={4} paddingY={5}>
         <form onSubmit={handleSubmit}>
-          <Box paddingTop={3}>
+          <Box textAlign="right">
             <ButtonGroup>
               <FileInput
                 label={label}

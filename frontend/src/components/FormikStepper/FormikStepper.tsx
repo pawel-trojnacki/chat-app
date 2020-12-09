@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { motion } from 'framer-motion';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,12 +42,24 @@ export const FormikStep: FC<FormikStepProps> = ({ children, helperText }) => {
   return (
     <Box marginY={4}>
       <Box textAlign="center" paddingTop={2} paddingBottom={4}>
-        <Typography variant="h4" component="h2">
-          {helperText}
-        </Typography>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Typography variant="h4" component="h2">
+            {helperText}
+          </Typography>
+        </motion.div>
       </Box>
 
-      {children}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        {children}
+      </motion.div>
     </Box>
   );
 };

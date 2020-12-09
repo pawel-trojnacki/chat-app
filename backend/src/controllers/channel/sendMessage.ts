@@ -48,10 +48,14 @@ export const sendMessage: RequestHandler = async (req, res) => {
             .json({ error: 'Something went wrong. Please try again' });
     }
 
-    require('../../socket').getIo().emit('channel', {
-        action: 'get-channel',
-        messages: messages.messages,
-    });
+    const message = messages.messages[messages.messages.length - 1];
 
-    res.json({ messages: messages.messages.toObject({ getters: true }) });
+    require('../../socket')
+        .getIo()
+        .emit('channel', {
+            action: 'get-channel',
+            message: message.toObject({ getters: true }),
+        });
+
+    res.json({ messages: messages.messages });
 };

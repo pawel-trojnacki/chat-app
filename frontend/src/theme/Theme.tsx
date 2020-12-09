@@ -17,7 +17,6 @@ let theme = createMuiTheme({
     },
     grey: {
       100: '#f5f4f5',
-      200: '#e0e0e0',
     },
   },
   typography: {

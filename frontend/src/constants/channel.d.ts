@@ -23,3 +23,12 @@ export interface ChannelModel extends Document {
   members: Array<string>;
   messages: MessageModel[];
 }
+
+export interface ChannelInfoType {
+  _id: string;
+  name: string;
+  admin: string;
+  image: string;
+  description: string;
+  members: string;
+}

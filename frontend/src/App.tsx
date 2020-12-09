@@ -4,7 +4,7 @@ import ThemeStyle from './theme/Theme';
 import { routes } from './routes/routes';
 import AppRoute from './components/AppRoute/AppRoute';
 import { AuthProvider } from './context/context';
-import UserTemplate from './templates/UserTemplate';
+import UserTemplate from './templates/UserTemplate/UserTemplate';
 import Auth from './pages/Auth';
 
 const App = () => {
@@ -30,21 +30,6 @@ const App = () => {
                 </UserTemplate>
               </Route>
             </Switch>
-
-            {/* <Switch>
-              <AppRoute exact path="/" component={Auth} isPrivate={false} />
-              <UserTemplate>
-                {routes.map(({ path, component, isPrivate }) => (
-                  <AppRoute
-                    key={path}
-                    path={path}
-                    component={component}
-                    isPrivate={isPrivate}
-                    exact
-                  />
-                ))}
-              </UserTemplate>
-            </Switch> */}
           </main>
         </AuthProvider>
       </ThemeStyle>

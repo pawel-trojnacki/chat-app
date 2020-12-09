@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 
-type methodType = 'get' | 'post' | 'patch' | 'delete';
+type methodType = 'get' | 'post' | 'patch' | 'delete' | 'put';
 
 export const useAxios = () => {
   const [error, setError] = useState<null | string>(null);
