@@ -12,7 +12,7 @@ const App = () => {
     <div className="App">
       <ThemeStyle>
         <AuthProvider>
-          <main>
+          <main data-testid="main">
             <Switch>
               <Route path="/" exact component={Auth} />
               <Route path="/dashboard/:path?/:path?" exact>

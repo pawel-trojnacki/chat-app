@@ -21,8 +21,8 @@ const NavBar: FC<NavBarProps> = ({
 }) => {
   const classes = useStyles();
   return (
-    <AppBar position="fixed" className={classes.root}>
-      <Toolbar>
+    <AppBar position="fixed" className={classes.root} data-testid="appbar">
+      <Toolbar data-testid="menu-toolbar">
         <IconButton
           color="inherit"
           aria-label="open menu"
@@ -33,7 +33,7 @@ const NavBar: FC<NavBarProps> = ({
           <MenuIcon />
         </IconButton>
       </Toolbar>
-      <Toolbar className={classes.iconsWrapper}>
+      <Toolbar className={classes.iconsWrapper} data-testid="links-toolbar">
         <Link to={Urls.UserAccount} className={classes.link}>
           <IconButton color="inherit" aria-label="user account">
             <AccountIcon />

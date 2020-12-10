@@ -90,7 +90,11 @@ const LoginForm: FC<{ registrationForm?: boolean }> = ({
       };
 
   return (
-    <Box paddingX={{ xs: 5, sm: 20, md: 5, lg: 10, xl: 24 }} paddingTop={7}>
+    <Box
+      paddingX={{ xs: 5, sm: 20, md: 5, lg: 10, xl: 24 }}
+      paddingTop={7}
+      data-testid="login-form"
+    >
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
@@ -114,7 +118,13 @@ const LoginForm: FC<{ registrationForm?: boolean }> = ({
             type="password"
           />
           <Box marginY={3}>
-            <Button fullWidth type="submit" variant="contained" color="primary">
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              data-testid="login-form-button"
+            >
               {registrationForm ? 'Sign in' : 'Log in'}
             </Button>
           </Box>

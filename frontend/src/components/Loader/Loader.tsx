@@ -15,6 +15,7 @@ const Loader: FC<LoaderProps> = ({ isLoading, error, height }) => {
       display="flex"
       justifyContent="center"
       alignItems="center"
+      data-testid="loader"
     >
       {isLoading && <CircularProgress />}
       {error && !isLoading && <Typography variant="h2">{error}</Typography>}

@@ -30,5 +30,5 @@ export interface ChannelInfoType {
   admin: string;
   image: string;
   description: string;
-  members: string;
+  members: string[];
 }

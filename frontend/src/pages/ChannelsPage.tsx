@@ -5,7 +5,7 @@ import { Grid, Box } from '@material-ui/core';
 import { AuthContext } from '../context/context';
 import { useAxios } from '../hooks/useAxios';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
-import Loader from '../components/Lodader/Loader';
+import Loader from '../components/Loader/Loader';
 import ChannelCard from '../components/ChannelCard/ChannelCard';
 import CategoryTabs from '../components/CategoryTabs/CategoryTabs';
 import { ChannelModel } from '../constants/channel';

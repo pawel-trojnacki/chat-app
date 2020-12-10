@@ -1,13 +1,16 @@
 import React, { FC, useState } from 'react';
 import { object, string } from 'yup';
+import { FormikValues } from 'formik';
+import { motion } from 'framer-motion';
 
 import FormikTextInput from '../FormikTextInput/FormikTextInput';
 import FormikSelect from '../FormikSelect/FormikSelect';
 import DropzoneField from '../DropzoneField/DropzoneField';
 import { FormikStepper, FormikStep } from '../FormikStepper/FormikStepper';
 import { categories } from '../../constants/categories';
-import { FormikValues } from 'formik';
-import { motion } from 'framer-motion';
+
+import { ChannelFormValidation } from './validation';
+import { HelperText } from './helperText';
 
 const initialChannelFormValues = {
   name: '',
@@ -35,12 +38,12 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
       >
         <FormikStep
           label="Details"
-          helperText="Choose a name and category for your channel"
+          helperText={HelperText.Details}
           validationSchema={object().shape({
             name: string()
-              .required('Channel name is required')
-              .min(3, 'Name should to be at least 3 characters long')
-              .max(24, 'Name should be up to 24 characters long'),
+              .required(ChannelFormValidation.NameRequired)
+              .min(3, ChannelFormValidation.NameTooShort)
+              .max(24, ChannelFormValidation.NameTooLong),
           })}
         >
           <FormikTextInput name="name" label="Channel name" disabled={false} />
@@ -50,20 +53,17 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
             items={formCategories}
           />
         </FormikStep>
-        <FormikStep
-          label="Image"
-          helperText="Upload an image. You can do it later as well"
-        >
+        <FormikStep label="Image" helperText={HelperText.Image}>
           <DropzoneField file={file} setFile={setFile} disabledButton={false} />
         </FormikStep>
         <FormikStep
-          helperText="Let other users know what your channel is about"
+          helperText={HelperText.Desc}
           label="Description"
           validationSchema={object().shape({
             description: string()
-              .required('Description is required')
-              .min(8, 'Description should be at least 8 characters long')
-              .max(100, 'Description should be up to 100 characters long'),
+              .required(ChannelFormValidation.DescRequired)
+              .min(8, ChannelFormValidation.DescTooShort)
+              .max(100, ChannelFormValidation.DescTooLong),
           })}
         >
           <FormikTextInput

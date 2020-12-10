@@ -31,6 +31,7 @@ const FormikTextInput: FC<FormikTextInputProps> = ({
         fullWidth
         multiline={multiline}
         rows={rows}
+        inputProps={{ 'data-testid': 'formik-text-input' }}
       />
     </Box>
   );

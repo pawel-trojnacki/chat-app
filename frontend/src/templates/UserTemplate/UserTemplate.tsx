@@ -154,7 +154,7 @@ const UserTemplate: FC<UserTemplateProps> = (props: UserTemplateProps) => {
       )}
 
       {!isLoading && (
-        <div className={classes.root}>
+        <div className={classes.root} data-testid="user-template">
           <CssBaseline />
           <NavBar
             handleDrawerToggle={handleDrawerToggle}

@@ -9,7 +9,7 @@ import { AuthContext } from '../context/context';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import MessageField from '../components/MessageField/MessageField';
 import MessageList from '../components/MessageList/MessageList';
-import Loader from '../components/Lodader/Loader';
+import Loader from '../components/Loader/Loader';
 import { MessageProps } from '../components/Message/Message';
 import FixedWrapper from '../components/FixedWrapper/FixedWrapper';
 import FloatingButton from '../components/FloatingButton/FloatingButton';

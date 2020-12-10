@@ -93,9 +93,9 @@ export const FormikStepper: FC<FormikConfig<FormikValues>> = ({
         }
       }}
     >
-      <Paper className={classes.root}>
+      <Paper className={classes.root} data-testid="formik-stepper">
         <Form autoComplete="off">
-          <Stepper alternativeLabel activeStep={step}>
+          <Stepper alternativeLabel activeStep={step} data-testid="mui-stepper">
             {childernArray.map((child) => (
               <Step key={child.props.label}>
                 <StepLabel>{child.props.label}</StepLabel>
@@ -120,6 +120,7 @@ export const FormikStepper: FC<FormikConfig<FormikValues>> = ({
               variant="contained"
               color="primary"
               type="submit"
+              data-testid="channel-form-button"
             >
               {isLastStep() ? 'Save' : 'Next'}
             </Button>

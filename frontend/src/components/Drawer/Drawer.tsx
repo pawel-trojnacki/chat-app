@@ -21,9 +21,9 @@ interface DrawerProps {
 const Drawer: FC<DrawerProps> = ({ userChannels, handleCloseDrawer }) => {
   const classes = useStyles();
   return (
-    <div>
+    <div data-testid="drawer">
       <Divider />
-      <List>
+      <List data-testid="action-links">
         <Link
           to={Urls.Explore}
           className={classes.linkElement}
@@ -61,7 +61,7 @@ const Drawer: FC<DrawerProps> = ({ userChannels, handleCloseDrawer }) => {
       </Box>
 
       {userChannels && userChannels.length > 0 && (
-        <List>
+        <List data-testid="user-channels">
           {userChannels.map((channel) => (
             <Link
               key={channel._id}
