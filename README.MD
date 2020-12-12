@@ -8,7 +8,10 @@ Chat app with authentication and authorization, CRUD functionality, real-time co
 
 App written in TypeScript, using React on frontend and Node & Express as bakcend, with MongoDB database and AWS for upload images.
 
-##Credentials
+## Credentials
+
 Sample user:
+
 login: user1@email.com
+
 password: 00000000
