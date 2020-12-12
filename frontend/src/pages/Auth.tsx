@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Box, Grid, Hidden } from '@material-ui/core';
 
-import { AuthContext } from '../context/context';
+import { AuthContext } from '../context/AuthContext';
 import LoginForm from '../components/LoginForm/LoginForm';
 import AnimatedSvg from '../components/AnimatedSvg/AnimatedSvg';
 import AuthBox from '../components/AuthBox/AuthBox';

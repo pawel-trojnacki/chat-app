@@ -23,7 +23,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 
 import { useAxios } from '../../hooks/useAxios';
-import { AuthContext } from '../../context/context';
+import { AuthContext } from '../../context/AuthContext';
 import EmojiPicker from '../EmojiPicker/EmojiPicker';
 
 const drawerWidth = '240px';
@@ -71,11 +71,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface MessageInputProps {
+interface MessageFieldProps {
   id: string;
 }
 
-const MessageInput: FC<MessageInputProps> = ({ id }) => {
+const MessageField: FC<MessageFieldProps> = ({ id }) => {
   const { state } = useContext(AuthContext);
   const classes = useStyles();
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
@@ -147,7 +147,7 @@ const MessageInput: FC<MessageInputProps> = ({ id }) => {
   };
   return (
     <>
-      <Paper elevation={3} className={classes.root}>
+      <Paper elevation={3} className={classes.root} data-testid="message-field">
         <Box paddingY={3} paddingX={{ xs: 2, sm: 3, md: 5 }}>
           <Box position="relative">
             <TextField
@@ -162,6 +162,7 @@ const MessageInput: FC<MessageInputProps> = ({ id }) => {
                   input: classes.input,
                 },
               }}
+              inputProps={{ 'data-testid': 'message-field-input' }}
             />
 
             <Grid container className={classes.buttons} justify="flex-end">
@@ -182,6 +183,7 @@ const MessageInput: FC<MessageInputProps> = ({ id }) => {
                   className={classes.buttonIcon}
                   color="primary"
                   onClick={handlePickerClick}
+                  data-testid="emoji-picker-button"
                 >
                   <PickerIcon />
                 </IconButton>
@@ -221,4 +223,4 @@ const MessageInput: FC<MessageInputProps> = ({ id }) => {
   );
 };
 
-export default MessageInput;
+export default MessageField;

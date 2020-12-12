@@ -1,7 +1,7 @@
 import React, { FC, useContext, useState } from 'react';
 import { Box } from '@material-ui/core';
 
-import { AuthContext, AuthActionTypes } from '../context/context';
+import { AuthContext, AuthActionTypes } from '../context/AuthContext';
 import { useAxios } from '../hooks/useAxios';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import Card from '../components/Card/Card';

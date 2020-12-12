@@ -27,18 +27,13 @@ const dummyFunction = () => {};
 
 afterEach(cleanup);
 
-describe('Drawer', () => {
-  test('render Drawer with user channels', () => {
-    render(
-      <Router>
-        <Drawer
-          userChannels={dummyChannels}
-          handleCloseDrawer={dummyFunction}
-        />
-      </Router>
-    );
-    expect(screen.getByTestId('action-links')).toBeInTheDocument();
-    expect(screen.getByTestId('user-channels')).toBeInTheDocument();
-    expect(screen.getByTestId('user-channels')).not.toBeEmptyDOMElement();
-  });
+test('Drawer renders correctly', () => {
+  render(
+    <Router>
+      <Drawer userChannels={dummyChannels} handleCloseDrawer={dummyFunction} />
+    </Router>
+  );
+  expect(screen.getByTestId('action-links')).toBeInTheDocument();
+  expect(screen.getByTestId('user-channels')).toBeInTheDocument();
+  expect(screen.getByTestId('user-channels')).not.toBeEmptyDOMElement();
 });

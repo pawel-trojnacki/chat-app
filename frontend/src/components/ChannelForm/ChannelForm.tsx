@@ -24,6 +24,14 @@ export interface ChannelFormProps {
 
 const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
   const [file, setFile] = useState<any>(null);
+  const {
+    NameRequired,
+    NameTooShort,
+    NameTooLong,
+    DescRequired,
+    DescTooShort,
+    DescTooLong,
+  } = ChannelFormValidation;
 
   const formCategories = categories.slice(1);
   return (
@@ -41,9 +49,9 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
           helperText={HelperText.Details}
           validationSchema={object().shape({
             name: string()
-              .required(ChannelFormValidation.NameRequired)
-              .min(3, ChannelFormValidation.NameTooShort)
-              .max(24, ChannelFormValidation.NameTooLong),
+              .required(NameRequired)
+              .min(3, NameTooShort)
+              .max(24, NameTooLong),
           })}
         >
           <FormikTextInput name="name" label="Channel name" disabled={false} />
@@ -61,9 +69,9 @@ const ChannelForm: FC<ChannelFormProps> = ({ handleSubmit }) => {
           label="Description"
           validationSchema={object().shape({
             description: string()
-              .required(ChannelFormValidation.DescRequired)
-              .min(8, ChannelFormValidation.DescTooShort)
-              .max(100, ChannelFormValidation.DescTooLong),
+              .required(DescRequired)
+              .min(8, DescTooShort)
+              .max(100, DescTooLong),
           })}
         >
           <FormikTextInput

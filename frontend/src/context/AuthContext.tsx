@@ -41,7 +41,7 @@ export const AuthContext = createContext<{
   dispatch: () => null,
 });
 
-const AuthReducer = (state: AuthStateType, action: AuthActions) => {
+export const AuthReducer = (state: AuthStateType, action: AuthActions) => {
   switch (action.type) {
     case AuthActionTypes.Login:
       const expiration = new Date(new Date().getTime() + 1000 * 36000);

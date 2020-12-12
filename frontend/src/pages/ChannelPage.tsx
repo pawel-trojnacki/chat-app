@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Edit as EditIcon } from '@material-ui/icons';
 
 import { useAxios } from '../hooks/useAxios';
-import { AuthContext } from '../context/context';
+import { AuthContext } from '../context/AuthContext';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import MessageField from '../components/MessageField/MessageField';
 import MessageList from '../components/MessageList/MessageList';

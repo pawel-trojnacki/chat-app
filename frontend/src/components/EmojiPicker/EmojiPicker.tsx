@@ -45,6 +45,7 @@ const EmojiPicker: FC<EmojiPickerProps> = ({
         animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
         exit={{ opacity: 0, y: '100%', x: '50vw', scale: 0 }}
         transition={{ duration: 0.4 }}
+        data-testid="emoji-picker"
       >
         <Box width="100%" textAlign="right" paddingBottom={2}>
           <IconButton size="small" onClick={closePicker}>

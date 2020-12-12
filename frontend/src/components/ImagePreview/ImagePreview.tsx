@@ -16,9 +16,7 @@ interface ImagePreviewProps {
 
 const ImagePreview: FC<ImagePreviewProps> = ({ file }) => {
   const classes = useStyles();
-  return (
-    <img alt="user avatar" src={file || undefined} className={classes.root} />
-  );
+  return <img alt="" src={file || undefined} className={classes.root} />;
 };
 
 export default ImagePreview;

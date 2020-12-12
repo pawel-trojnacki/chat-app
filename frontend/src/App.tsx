@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import ThemeStyle from './theme/Theme';
 import { routes } from './routes/routes';
 import AppRoute from './components/AppRoute/AppRoute';
-import { AuthProvider } from './context/context';
+import { AuthProvider } from './context/AuthContext';
 import UserTemplate from './templates/UserTemplate/UserTemplate';
 import Auth from './pages/Auth';
 

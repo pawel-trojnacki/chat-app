@@ -2,7 +2,7 @@ import React, { FC, useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
 import { RouteProps } from '../../routes/routes';
-import { AuthContext } from '../../context/context';
+import { AuthContext } from '../../context/AuthContext';
 
 const AppRoute: FC<RouteProps> = ({
   path,

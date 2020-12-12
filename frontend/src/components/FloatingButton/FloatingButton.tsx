@@ -21,13 +21,11 @@ interface FloatingButtonProps {
 const FloatingButton: FC<FloatingButtonProps> = ({ icon: Icon, link }) => {
   const classes = useStyles();
   return (
-    // <div className={classes.root}>
     <Link to={link} className={classes.root}>
       <Fab size="medium" component="div" color="primary">
         <Icon />
       </Fab>
     </Link>
-    // </div>
   );
 };
 

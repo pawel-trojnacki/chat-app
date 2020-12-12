@@ -8,18 +8,16 @@ const dummyFunction = () => {};
 
 afterEach(cleanup);
 
-describe('NavBar', () => {
-  test('Render navbar', () => {
-    render(
-      <Router>
-        <NavBar
-          handleDrawerToggle={dummyFunction}
-          handleLogoutButtonClick={dummyFunction}
-        />
-      </Router>
-    );
-    expect(screen.getByTestId('appbar')).toBeInTheDocument();
-    expect(screen.getByTestId('menu-toolbar')).toBeInTheDocument();
-    expect(screen.getByTestId('links-toolbar')).toBeInTheDocument();
-  });
+test('renders NavBar correctly', () => {
+  render(
+    <Router>
+      <NavBar
+        handleDrawerToggle={dummyFunction}
+        handleLogoutButtonClick={dummyFunction}
+      />
+    </Router>
+  );
+  expect(screen.getByTestId('appbar')).toBeInTheDocument();
+  expect(screen.getByTestId('menu-toolbar')).toBeInTheDocument();
+  expect(screen.getByTestId('links-toolbar')).toBeInTheDocument();
 });

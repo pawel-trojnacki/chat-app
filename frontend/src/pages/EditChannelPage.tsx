@@ -2,7 +2,7 @@ import React, { FC, useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 
-import { AuthContext } from '../context/context';
+import { AuthContext } from '../context/AuthContext';
 import { useAxios } from '../hooks/useAxios';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import Card from '../components/Card/Card';

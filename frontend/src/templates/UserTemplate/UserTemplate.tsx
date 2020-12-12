@@ -13,7 +13,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 import AppDrawer from '../../components/Drawer/Drawer';
 import NavBar from '../../components/NavBar/NavBar';
-import { AuthContext, AuthActionTypes } from '../../context/context';
+import { AuthContext, AuthActionTypes } from '../../context/AuthContext';
 import { useAxios } from '../../hooks/useAxios';
 import { useStyles } from './styles';
 

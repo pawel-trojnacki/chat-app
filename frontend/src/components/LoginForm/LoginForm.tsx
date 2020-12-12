@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { object, string } from 'yup';
 
 import { useAxios } from '../../hooks/useAxios';
-import { AuthContext, AuthActionTypes } from '../../context/context';
+import { AuthContext, AuthActionTypes } from '../../context/AuthContext';
 import { Urls } from '../../constants/urls';
 import FormikTextInput from '../FormikTextInput/FormikTextInput';
 

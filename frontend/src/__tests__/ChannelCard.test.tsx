@@ -17,7 +17,7 @@ const dummyChannel = {
 const channelMembersLength = dummyChannel.members.length.toString();
 
 describe('ChannelCard', () => {
-  test('render ChannelCard correctly', () => {
+  test('renders correctly', () => {
     render(<ChannelCard {...dummyChannel} />);
     expect(screen.getByText(dummyChannel.name)).toBeInTheDocument();
     expect(screen.getByText(dummyChannel.description)).toBeInTheDocument();

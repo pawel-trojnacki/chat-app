@@ -2,7 +2,7 @@ import React, { FC, useEffect, useContext, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Grid, Box } from '@material-ui/core';
 
-import { AuthContext } from '../context/context';
+import { AuthContext } from '../context/AuthContext';
 import { useAxios } from '../hooks/useAxios';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import Loader from '../components/Loader/Loader';

@@ -12,20 +12,20 @@ import LoginForm from '../components/LoginForm/LoginForm';
 afterEach(cleanup);
 
 describe('LoginForm', () => {
-  test('render login form', () => {
+  test('renders correctly', () => {
     render(<LoginForm />);
     expect(screen.getByText('Email')).toBeInTheDocument();
     expect(screen.getByText('Password')).toBeInTheDocument();
     expect(screen.getByText('Log in')).toBeInTheDocument();
   });
 
-  test('render login form with registration mode', () => {
+  test('renders with registration mode', () => {
     render(<LoginForm registrationForm />);
     expect(screen.getByText('Username')).toBeInTheDocument();
     expect(screen.getByText('Sign in')).toBeInTheDocument();
   });
 
-  test('throw error when email filed is empty', async () => {
+  test('throws error when email filed is empty', async () => {
     render(<LoginForm />);
     fireEvent.click(screen.getByTestId('login-form-button'));
     const nodeText = await waitFor(() => screen.getByText('Email is required'));

@@ -5,7 +5,7 @@ import { FormikValues } from 'formik';
 import PageTemplate from '../templates/PageTemplate/PageTemplate';
 import ChannelForm from '../components/ChannelForm/ChannelForm';
 import { useAxios } from '../hooks/useAxios';
-import { AuthContext } from '../context/context';
+import { AuthContext } from '../context/AuthContext';
 
 const CreateChannelPage = () => {
   const { state } = useContext(AuthContext);

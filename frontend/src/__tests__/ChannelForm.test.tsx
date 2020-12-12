@@ -19,14 +19,14 @@ const correctName = 'Sample channel name';
 afterEach(cleanup);
 
 describe('ChannelForm', () => {
-  test('render ChannelForm with first step', async () => {
+  test('renders with first step', async () => {
     render(<ChannelForm handleSubmit={dummyFunction} />);
     expect(screen.getByTestId('formik-stepper')).toBeInTheDocument();
     expect(screen.getByTestId('mui-stepper')).toBeInTheDocument();
     expect(screen.getByText(HelperText.Details)).toBeInTheDocument();
   });
 
-  test('throw error when channel name is incorrect', async () => {
+  test('throws error when channel name is incorrect', async () => {
     render(<ChannelForm handleSubmit={dummyFunction} />);
     fireEvent.change(screen.getByTestId('formik-text-input'), {
       target: { value: tooShortName },
@@ -38,7 +38,7 @@ describe('ChannelForm', () => {
     expect(textNode).toBeInTheDocument();
   });
 
-  test('render second step when values are correct', async () => {
+  test('renders second step when values are correct', async () => {
     render(<ChannelForm handleSubmit={dummyFunction} />);
     fireEvent.change(screen.getByTestId('formik-text-input'), {
       target: { value: correctName },
